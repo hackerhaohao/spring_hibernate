@@ -8,4 +8,19 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 	<context:property-placeholder location="classpath:database.properties"/>
+	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close" lazy-init="true">
+		<property name="user" value="${mySql.user}"></property>
+		<property name="password" value="${mySql.password}"></property>
+		<property name="jdbcUrl" value="${mySql.jdbcUrl}"></property>
+		<property name="driverClass" value="${mySql.driverClass}"></property>
+		<property name="minPoolSize" value="${mySql.minPoolSize}"></property>
+		<property name="maxPoolSize" value="${mySql.maxPoolSize}"></property>
+	</bean>
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+	</bean>
+	
 </beans>
